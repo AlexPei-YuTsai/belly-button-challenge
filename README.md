@@ -1,1 +1,1 @@
-# belly-button-challenge
+# Interactive Visualizations Challenge
