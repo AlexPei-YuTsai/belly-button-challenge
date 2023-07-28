@@ -7,7 +7,6 @@ let data = {};
 d3.json(url).then(function(jsonData){
   // Read json data into a globally accessible variable
   data = jsonData;
-  console.log(data);
 
   // There are 153 of them, so this block here programmatically creates dropdown options so I don't have to hardcode it by hand
   // Iterate through the list of recorded names to create options
