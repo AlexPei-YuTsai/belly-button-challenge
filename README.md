@@ -1,5 +1,7 @@
 # Interactive Visualizations Challenge
 > How can we make visualizations on a website and have it be responsive to user input?
+
+> [Turns out, we can do it with GitHub Pages.](https://alexpei-yutsai.github.io/belly-button-challenge)
 ## Folder Contents
 - A `static` folder containing just one `js` folder containing an `app.js` file that handles the logic and functionality of the website.
 - An `index.html` file that imports all the Javascript modules needed and builds a basic framework for the visual sructure of our website.
@@ -87,10 +89,32 @@ In order to change the data displayed, you can pass a function into a form, togg
 ```html
 <select id="yourDropdown" onchange="optionChanged(this.value)"></select>
 ```
-The value of the dropdown, defined by the option a user would select, 
-
-
+The value of the dropdown, defined by the option a user would select, can then be passed through the function called in the `onchange` attribute of the changed dropdown menu in order to assign new values to the charts to be updated.
+```javascript
+function optionChanged(value){
+  // It's a bit of a hacky, roundabout method, but the point of this line is to get the data from the JSON that corresponds to the value passed in
+  let updatedata = data.someArray[data.someArray.indexOf(value)];
+  
+  // Update your traces with syntax the documentation didn't bother to explain
+  let updatedTraces = [{
+    x:[updatedata.arrayOfValuesA],
+    y:[updatedata.arrayOfValuesB],
+    text:[updatedata.arrayOfLabels],
+  }];
+  
+  // Update your layout
+  let updatedLayout = {
+    title:"some new value"
+  };
+  
+  // Update the plot at some position and specify what traces to update, even if there's only one trace to update
+  Plotly.update("someDivElement", updatedTraces, updatedLayout, [0]);
+};
+```
 ![A sample picture of the charts after a different value is selected from the dropdown menu](https://cdn.discordapp.com/attachments/939673945240637450/1134763128702386187/image.png)
+
+We've only barely scratched the surface with this demonstration, but there are plenty of other things you can do with D3 and Plotly. This is also done with the most basic of styling, so you can also make it prettier with a little time, effort, and documentation.
+
 ## Resources that helped a lot
 - Official documentation for [Plotly (Javascript)](https://plotly.com/javascript/) is, unfortunately, terribly vague and unhelpful as they are a Python library first and Javascript API last. Many inquiries we had needed to be answered through a 3rd party source on the internet because they didn't demonstrate how to use their most basic functionalities on their website. Go figure.
   - For example, for some incomprehensible reason, `Plotly.update()`'s syntax doesn't work intuitively and you have to [wrap your updated content with an extra set of brackets](https://stackoverflow.com/a/60713918) to get it to work.
